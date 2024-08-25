@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="index-resource/icon crop.png" type="image/x-icon">
+
+    <title>Speech to Text Transcription</title>
+    <link rel="stylesheet" href="stt-resource/stt-style.css">
+</head>
+<body>
+<nav style="height:10px;">
+    <a href="index.html" style="text-decoration: none;">
+        <div style="display: flex;">
+            <img src="index-resource/icon crop.png" alt="logo" style="width: 40px;
+    height: 40px;
+    padding: 20px 0px;
+}">
+            <h2 style="padding: 7px 10px; color: orangered;">AI JUNCTION</h2>
+        </div>
+    </a>
+    <div id="nav-part2">
+        <h4><a href="chat.html">ChatBOT</a></h4>
+        <h4><a href="imgindex.html">Image Generator</a></h4>
+        <h4><a href="ttsindex.html">Text To Speech</a></h4>
+        <h4><a href="sttindex.html">Speech To Text</a></h4>
+    </div>
+    <h3>Menu</h3>
+</nav>
+<div id="container" >
+<h1>Speech to Text Transcription</h1>
+<form id="transcriptionForm" action="/transcribe" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept=".flac,.mp3,.mp4,.mpeg,.mpga,.m4a,.ogg,.wav,.webm" required>
+    <button type="submit">Transcribe</button>
+</form>
+<div id="transcriptionResult"></div>
+</div>
+
+<script src="stt-resource/stt-js.js"></script>
+</body>
+</html>

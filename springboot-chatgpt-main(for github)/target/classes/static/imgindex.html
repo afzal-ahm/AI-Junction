@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Generator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="index-resource/icon crop.png" type="image/x-icon">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="img-generator-resource/imgstyle.css">
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center">
+<nav>
+    <a href="index.html">
+        <div style="display: flex;" style="text-decoration: none;">
+            <img src="index-resource/icon crop.png" alt="logo" style="width: 40px;">
+            <h2 style="padding: 7px 10px; color: orangered;">AI JUNCTION</h2>
+        </div>
+    </a>
+    <div id="nav-part2">
+        <h4><a href="chat.html">ChatBOT</a></h4>
+        <h4><a href="imgindex.html">Image Generator</a></h4>
+        <h4><a href="ttsindex.html">Text To Speech</a></h4>
+        <h4><a href="sttindex.html">Speech To Text</a></h4>
+    </div>
+    <h3>Menu</h3>
+</nav>
+<div class="bg-white rounded shadow-md w-full flex-grow flex items-center justify-center" style="width: 70%; max-height: 70vh;">
+    <div id="imageContainer" class="flex justify-center items-center max-h-full max-w-full overflow-hidden">
+        <!-- Generated image will be displayed here -->
+    </div>
+</div>
+<div class="bg-white p-4 rounded shadow-md w-full" style="width: 70%">
+    <textarea id="prompt" class="w-full p-2 border border-gray-300 rounded " placeholder="Enter your prompt"></textarea>
+    <div class="flex space-x-2 mb-4">
+        <div class="w-1/3 space-y-2">
+            <label for="model" class="block text-sm font-medium text-gray-700">Model</label>
+            <select id="model" class="w-full p-2 border border-gray-300 rounded" onchange="updateOptions()">
+                <option value="dall-e-2">DALL-E 2</option>
+                <option value="dall-e-3">DALL-E 3</option>
+            </select>
+        </div>
+        <div class="w-1/3 space-y-2">
+            <label for="size" class="block text-sm font-medium text-gray-700">Size</label>
+            <select id="size" class="w-full p-2 border border-gray-300 rounded">
+                <!-- Options will be dynamically updated based on the model selection -->
+            </select>
+        </div>
+        <div class="w-1/3 space-y-2">
+            <label for="style" class="block text-sm font-medium text-gray-700">Style</label>
+            <select id="style" class="w-full p-2 border border-gray-300 rounded">
+                <option value="vivid">Vivid</option>
+                <option value="natural">Natural</option>
+            </select>
+        </div>
+    </div>
+    <button onclick="generateImage()" class="w-full bg-blue-500 text-white p-2 rounded">Generate Image</button>
+</div>
+<script src="img-generator-resource/img-script.js"></script>
+</body>
+</html>

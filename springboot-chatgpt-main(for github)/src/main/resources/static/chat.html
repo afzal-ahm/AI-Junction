@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="shortcut icon" href="index-resource/icon crop.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="chatbotResource/chatstyle.css">
+  <title>Chatbot</title>
+</head>
+
+<body>
+<div class="chat-container">
+  <!-- NAV BAR -->
+  <nav>
+
+    <a href="index.html" style="text-decoration: none;">
+      <div style="display: flex;">
+        <img src="index-resource/icon crop.png" alt="logo" style="width: 40px;">
+        <h2 style="padding: 7px 10px; color: orangered;">AI JUNCTION</h2>
+      </div>
+    </a>
+    <div id="nav-part2">
+      <h4><a href="chat.html">ChatBOT</a></h4>
+      <h4><a href="imgindex.html">Image Generator</a></h4>
+      <h4><a href="ttsindex.html">Text To Speech</a></h4>
+      <h4><a href="sttindex.html">Speech To Text</a></h4>
+    </div>
+    <h3>Menu</h3>
+  </nav>
+  <div class="messages" id="messages">
+    <!-- Messages will appear here -->
+  </div>
+  <div
+          class="w-full min-w-[300px] items-end px-2 pb-3 pt-0 sm:w-[600px] sm:pb-8 sm:pt-5 md:w-[700px] lg:w-[700px] xl:w-[800px]">
+    <div class="flex flex-col flex-wrap justify-center gap-2"></div>
+    <div
+            class="border-input relative mt-3 flex min-h-[60px] w-full items-center justify-center rounded-xl border-3">
+      <div class="absolute bottom-[76px] left-0 max-h-[300px] w-full overflow-auto rounded-xl dark:border-none">
+      </div>
+      <svg onclick="startNewChat()" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+           class="absolute bottom-[12px] left-3 cursor-pointer p-1 hover:opacity-50">
+        <path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"></path>
+        <path d="M9 12h6"></path>
+        <path d="M12 9v6"></path>
+      </svg>
+      <input
+              class="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus:none h-10 w-full rounded-md border px-3 py-2 text-sm file:border-0 file:bg-transparent file:text-sm file:font-medium focus-visible:outline-none focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 hidden"
+              accept="text/csv,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/json,text/markdown,application/pdf,text/plain,image/*"
+              type="file">
+      <textarea id="messageInput"
+                class="border-2 ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring text-md flex w-full resize-none rounded-md  px-14 py-2 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder="Ask anything." style="height: 40px !important;"></textarea>
+      <div class="absolute bottom-[14px] right-3 cursor-pointer hover:opacity-50">
+        <button onclick="sendMessage()" id="bb">
+          <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+               class="bg-primary text-secondary rounded p-1">
+            <path d="M10 14l11 -11"></path>
+            <path d="M21 3l-6.5 18a.55 .55 0 0 1 -1 0l-3.5 -7l-7 -3.5a.55 .55 0 0 1 0 -1l18 -6.5"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+        const messageInput = document.getElementById('messageInput');
+        const messages = document.getElementById('messages');
+
+        function sendMessage() {
+            const userMessage = messageInput.value;
+
+            if (userMessage.trim() === '') {
+                return;
+            }
+
+            // Display user message
+            const userMessageElement = document.createElement('div');
+            userMessageElement.className = 'message user';
+            userMessageElement.innerHTML = `
+                <span>${userMessage}</span>
+                <img src="chatbotResource/user-regular.svg" alt="User Logo" style="padding: 3px 3px">
+            `;
+            messages.appendChild(userMessageElement);
+
+            // Clear input
+            messageInput.value = '';
+            resizeInput(); // Reset input height
+
+            // Call backend API to get the chatbot response
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ message: userMessage }),
+            })
+                .then(response => response.text())
+                .then(botMessage => {
+                    // Display bot message
+                    const botMessageElement = document.createElement('div');
+                    botMessageElement.className = 'message bot';
+                    botMessageElement.innerHTML = `
+                        <img src="chatbotResource/icon crop.png" alt="Bot Logo">
+                        <span style="padding: 10px 10px;
+
+    --tw-bg-opacity: 1;
+    background-color: rgba(244, 244, 244, var(--tw-bg-opacity));
+    border-radius: 11px;" >${botMessage}</span>
+                    `;
+                    messages.appendChild(botMessageElement);
+
+                    // Scroll to the bottom
+                    messages.scrollTop = messages.scrollHeight;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        function resizeInput() {
+            messageInput.style.height = '40px'; // Reset height
+            messageInput.style.height = messageInput.scrollHeight + 'px'; // Set new height based on content
+        }
+
+        messageInput.addEventListener('input', resizeInput);
+
+        messageInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault(); // Prevent default behavior of Enter key
+                sendMessage();
+            }
+        });
+
+        function startNewChat() {
+            // Clear all messages
+            messages.innerHTML = '';
+        }
+    </script>
+</body>
+
+</html>

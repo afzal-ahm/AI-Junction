@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="index-resource/icon crop.png" type="image/x-icon">
+    <title>Text to Speech</title>
+    <link rel="stylesheet" href="tts-resource/styles.css">
+</head>
+
+<body>
+<nav style="height:10px;">
+    <a href="index.html" style="text-decoration: none;">
+        <div style="display: flex;">
+            <img src="index-resource/icon crop.png" alt="logo" style="width: 40px;
+    height: 40px;
+    padding: 20px 0px;
+}">
+            <h2 style="padding: 7px 10px; color: orangered;">AI JUNCTION</h2>
+        </div>
+    </a>
+    <div id="nav-part2">
+        <h4><a href="chat.html">ChatBOT</a></h4>
+        <h4><a href="imgindex.html">Image Generator</a></h4>
+        <h4><a href="ttsindex.html">Text To Speech</a></h4>
+        <h4><a href="sttindex.html">Speech To Text</a></h4>
+    </div>
+    <h3>Menu</h3>
+</nav>
+<div class="container1">
+<div class="container">
+    <div id="audioContainer" class="audio-container">
+        <div class="controls">
+            <div class="voice-dropdown" style="width: 85px; margin: 0px 10px;">
+                <button id="voiceButton" class="voice-button">alloy</button>
+                <div id="voiceOptions" class="voice-options" style="display: none;">
+                    <ul>
+                        <li><a href="#" data-voice="alloy">alloy</a></li>
+                        <li><a href="#" data-voice="echo">echo</a></li>
+                        <li><a href="#" data-voice="fable">fable</a></li>
+                        <li><a href="#" data-voice="onyx">onyx</a></li>
+                        <li><a href="#" data-voice="nova">nova</a></li>
+                        <li><a href="#" data-voice="shimmer">shimmer</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <audio id="audioPlayer" controls style="display: none;"></audio>
+
+            <div class="button-container">
+                <button id="playButton" class="play-button">&#9654;</button>
+                <button id="reloadButton" class="reload-button">&#8635;</button>
+                <select id="speedInput" class="speed-input">
+                    <option value="0.5">0.5x</option>
+                    <option value="0.75">0.75x</option>
+                    <option value="1.0" selected>1.0x</option>
+                    <option value="1.25">1.25x</option>
+                    <option value="1.5">1.5x</option>
+                    <option value="1.75">1.75x</option>
+                    <option value="2.0">2.0x</option>
+                </select>
+            </div>
+        </div>
+        <div class="progress-bar" id="progressBar">
+            <div></div>
+        </div>
+    </div>
+
+    <div id="loadingMessage" class="loading-message" style="display: none;">Loading...</div>
+
+    <div class="content">
+        <textarea id="textInput" name="textInput" placeholder="Type or paste anything and press send to convert text to speech." autofocus=""></textarea>
+    </div>
+    <div class="footer">
+        <a id="downloadButton" class="download-button" style="display: none; margin: 0px 10px;">Download</a>
+        <button type="button" id="sendButton" class="send-button" onclick="generateAudio()">Generate Audio</button>
+    </div>
+</div>
+</div>
+
+
+<script src="tts-resource/scripts.js"></script>
+</body>
+
+</html>
